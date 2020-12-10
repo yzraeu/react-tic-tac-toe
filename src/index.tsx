@@ -30,13 +30,6 @@ function calculateWinner(squares) {
     }
 }
 
-function calculateDraw(squares) {
-    for (let i = 0; i < squares.length; i++) {
-        if(squares[i] === null) return false;
-    }
-    return true;
-}
-
 class Board extends React.Component {
     constructor(props) {
         super(props);
@@ -61,17 +54,10 @@ class Board extends React.Component {
         return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
     }
 
-    handleBoardReset() {
-        this.setState({
-            squares: Array(9).fill(null),
-            xIsNext: this.state.xIsNext
-        });
-    }
 
     render() {
         const winner = calculateWinner(this.state.squares);
-        const isDraw = calculateDraw(this.state.squares);
-        const status = isDraw ? `Draw 😔` : winner ? `Winner is 🎉 ${winner} 🎊` : `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
+        const status = winner ? `Winner ${winner}` : `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
 
         return (
             <div>
@@ -90,9 +76,6 @@ class Board extends React.Component {
                     {this.renderSquare(6)}
                     {this.renderSquare(7)}
                     {this.renderSquare(8)}
-                </div>
-                <div className="reset" >
-                    <button onClick={() => this.handleBoardReset()}>Reset Game</button>
                 </div>
             </div>
         );
